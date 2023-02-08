@@ -11,6 +11,8 @@ def reconstruct_path(closed_list, current, partida):
   for i in range (0,len(total_path),1):
     print(total_path[len(total_path)- 1 - i])
 
+
+
   #while current in closed_list:
    # current = closed_list[current]
    # total_path.prepend(current)
@@ -96,9 +98,9 @@ def get_neighbors(v):
     else:
         return None
 
-def AStar(partida, destino):
+def AStar(partida, destino,linha):
     # partida é o número da estação inicial
-    # destino é o número da estaçãoo final
+    # destino é o número da estação final
     # linha é a linha na qual se encontra no início
 
     open_list = []            
@@ -138,6 +140,9 @@ def AStar(partida, destino):
         # Se n é o nó de destino
         if (current == destino):
             print(f'Done!')
+            # Print do tempo aqui
+            #print(f'Tempo final: {g_score[partida] + heuristic_table[partida][destino]} minutos')
+            #print(f'Tempo final: {f_score[partida]} minutos')
             return reconstruct_path(closed_list, current, partida) # função de reconstruir o caminho do nó de partida até o nó de chegada
 
         open_list.remove(current)
@@ -154,14 +159,18 @@ def AStar(partida, destino):
           if tentative_g_score < g_score[estacao_vizinho]:
             closed_list[estacao_vizinho] = current
             #print(closed_list)
+
             g_score[estacao_vizinho] = tentative_g_score
             f_score[estacao_vizinho] = tentative_g_score + heuristic_table[estacao_vizinho - 1][destino - 1]
+            if linha != linha_vizinho:
+              g_score[estacao_vizinho] += 4
             if estacao_vizinho not in open_list:
               open_list.append(estacao_vizinho)
 
     return failure()
 
 def main():
-    AStar(1,14)
+  linha = 'azul'
+  AStar(6,13, linha)
 
 main()
